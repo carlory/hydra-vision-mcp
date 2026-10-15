@@ -1,0 +1,65 @@
+name: Publish npm
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Serialize channel updates. Stale main jobs are checked again before publishing.
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: vars.NPM_PUBLISH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      HYDRA_LIVE_TEST: "0"
+      NPM_CONFIG_PROVENANCE: ${{ !github.event.repository.private }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Ensure OIDC-capable npm CLI
+        run: npm install --global npm@11
+      - run: npm ci
+      - run: npm run check
+      - name: Prepare unique main snapshot version
+        id: release
+        run: node scripts/prepare-release.mjs
+      - name: Test the exact version to publish
+        run: npm run test:package
+      - name: Skip outdated main commits
+        id: current
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          current_sha="$(git ls-remote --exit-code origin refs/heads/main | cut -f1)"
+          if [ "$current_sha" != "$EXPECTED_SHA" ]; then
+            echo 'publish=false' >> "$GITHUB_OUTPUT"
+            echo 'Skipping snapshot: main has advanced.'
+            exit 0
+          fi
+          echo 'publish=true' >> "$GITHUB_OUTPUT"
+      - name: Publish using npm trusted publishing
+        if: steps.current.outputs.publish == 'true'
+        env:
+          DIST_TAG: ${{ steps.release.outputs.dist-tag }}
+        run: npm publish --access public --tag "$DIST_TAG"
+      - name: Wait for npm processing to finish
+        if: steps.current.outputs.publish == 'true'
+        run: node scripts/wait-for-package.mjs

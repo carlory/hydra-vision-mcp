@@ -1,0 +1,75 @@
+{
+  "name": "@carlory/hydra-vision-mcp",
+  "version": "0.0.0",
+  "description": "Image analysis, OCR, diagram and UI tools for MCP clients via OpenAI-compatible APIs",
+  "license": "(MIT AND Apache-2.0)",
+  "author": "carlory",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlory/hydra-vision-mcp.git"
+  },
+  "homepage": "https://github.com/carlory/hydra-vision-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/carlory/hydra-vision-mcp/issues"
+  },
+  "keywords": [
+    "mcp",
+    "vision",
+    "kimi",
+    "video",
+    "model-context-protocol"
+  ],
+  "type": "module",
+  "bin": {
+    "hydra-vision-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "examples/mcp.json",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "docs",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSES"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "npm run clean && tsc && node scripts/build.mjs",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm test",
+    "test": "tsx --test test/*.test.ts",
+    "test:live": "node scripts/test-live.mjs",
+    "test:package": "node scripts/test-package.mjs",
+    "prepack": "npm run build",
+    "prepublishOnly": "node scripts/check-publish.mjs && npm run check"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "^8.71.2"
+  }
+}

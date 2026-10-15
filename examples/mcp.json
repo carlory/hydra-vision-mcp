@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "hydra-vision": {
+      "command": "npx",
+      "args": ["--yes", "@carlory/hydra-vision-mcp@latest"],
+      "env": {
+        "HYDRA_API_KEY": "REPLACE_WITH_YOUR_UPSTREAM_API_KEY",
+        "HYDRA_BASE_URL": "https://api.example.com/v1",
+        "HYDRA_MODEL": "public/rundao-kimi-k3"
+      }
+    }
+  }
+}

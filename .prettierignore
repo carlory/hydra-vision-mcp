@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+test-results/
+package-lock.json
+CHANGELOG.md
+*.tgz
+.env*
+*.local.json
+
+LICENSES/
