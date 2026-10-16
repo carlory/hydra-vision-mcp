@@ -1,6 +1,6 @@
 # hydra-vision-mcp
 
-[简体中文](README.zh-CN.md) | [Contributing](CONTRIBUTING.md) | [Publishing](docs/releasing.md)
+[Publishing](docs/releasing.md)
 
 A vision MCP server for image understanding, OCR, error diagnosis, diagrams, charts and UI analysis. Connect a text-only coding agent to a vision model through an OpenAI-compatible API.
 
@@ -11,7 +11,7 @@ Requires Node.js 22+. No FFmpeg dependency.
 ```sh
 export HYDRA_API_KEY='your-upstream-key'
 export HYDRA_BASE_URL='https://your-provider.example/v1'
-export HYDRA_MODEL='public/rundao-kimi-k3'
+export HYDRA_MODEL='public/kimi-k3'
 npx --yes @carlory/hydra-vision-mcp@latest
 ```
 
@@ -49,15 +49,15 @@ These tools provide model-based visual reasoning, including OCR and UI compariso
 
 ## Configuration
 
-| Variable            | Default                 | Purpose                                        |
-| ------------------- | ----------------------- | ---------------------------------------------- |
-| `HYDRA_API_KEY`     | Required for analysis   | Upstream provider key                          |
-| `HYDRA_BASE_URL`    | Required for analysis   | API root; `/chat/completions` is appended      |
-| `HYDRA_MODEL`       | `public/rundao-kimi-k3` | Vision model                                   |
-| `HYDRA_TIMEOUT_MS`  | `300000`                | Request timeout                                |
-| `HYDRA_MAX_TOKENS`  | `131072`                | Output limit; adjust for your provider's model |
-| `HYDRA_TEMPERATURE` | `0.8`                   | Sampling temperature                           |
-| `HYDRA_TOP_P`       | `0.6`                   | Nucleus sampling                               |
+| Variable            | Default               | Purpose                                        |
+| ------------------- | --------------------- | ---------------------------------------------- |
+| `HYDRA_API_KEY`     | Required for analysis | Upstream provider key                          |
+| `HYDRA_BASE_URL`    | Required for analysis | API root; `/chat/completions` is appended      |
+| `HYDRA_MODEL`       | `public/kimi-k3`      | Vision model                                   |
+| `HYDRA_TIMEOUT_MS`  | `300000`              | Request timeout                                |
+| `HYDRA_MAX_TOKENS`  | `131072`              | Output limit; adjust for your provider's model |
+| `HYDRA_TEMPERATURE` | `0.8`                 | Sampling temperature                           |
+| `HYDRA_TOP_P`       | `0.6`                 | Nucleus sampling                               |
 
 Requests use `thinking: { "type": "enabled" }` and non-streaming responses. The backend forwards the tool's messages without rewriting prompts. Provider errors are returned as MCP tool errors. Tools retry failed operations with exponential backoff. No extra cache or structured analysis response is added.
 
@@ -73,7 +73,7 @@ npm run test:package
 
 Checks cover task prompt stability, image tool requests and responses, concurrent backend isolation, CLI stdio and isolated npm package installation. `npm run test:live` is an opt-in real-provider image test. Neither ordinary tests nor live tests invoke video analysis or launch Claude.
 
-Code is organized by responsibility: MCP registration, tools, prompts, media handling, services and API providers. See [CONTRIBUTING.md](CONTRIBUTING.md) for the directory layout.
+Code is organized by responsibility: MCP registration, tools, prompts, media handling, services and API providers.
 
 ## License
 

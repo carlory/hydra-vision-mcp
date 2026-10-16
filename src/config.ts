@@ -44,7 +44,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
       );
     }
   }
-  const model = (env.HYDRA_MODEL ?? "public/rundao-kimi-k3").trim();
+  const model = (env.HYDRA_MODEL ?? "public/kimi-k3").trim();
   if (!model) throw new Error("HYDRA_MODEL must not be empty");
   return {
     baseUrl,

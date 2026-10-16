@@ -47,14 +47,13 @@ try {
   for (const file of files)
     assert.match(
       file,
-      /^(dist\/(?:[a-z-]+\/)*[^/]+\.(?:js|d\.ts)|docs\/[^/]+\.(?:md|json)|examples\/mcp\.json|package\.json|README(?:\.zh-CN)?\.md|CONTRIBUTING\.md|SECURITY\.md|THIRD_PARTY_NOTICES\.md|LICENSES\/Apache-2\.0\.txt|LICENSE)$/,
+      /^(dist\/(?:[a-z-]+\/)*[^/]+\.(?:js|d\.ts)|docs\/[^/]+\.(?:md|json)|examples\/mcp\.json|package\.json|README\.md|SECURITY\.md|THIRD_PARTY_NOTICES\.md|LICENSES\/Apache-2\.0\.txt|LICENSE)$/,
     );
   for (const required of [
     "dist/index.js",
     "package.json",
     "LICENSE",
     "README.md",
-    "README.zh-CN.md",
     "examples/mcp.json",
     "dist/prompts/index.js",
     "dist/tools/video-analysis.js",

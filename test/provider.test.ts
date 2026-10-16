@@ -49,7 +49,7 @@ test("provider preserves messages, request options and response text", async () 
     assert.equal(request.url, "/v1/chat/completions");
     assert.equal(request.headers.authorization, "Bearer secret");
     assert.deepEqual(body, {
-      model: "public/rundao-kimi-k3",
+      model: "public/kimi-k3",
       messages,
       thinking: { type: "enabled" },
       stream: false,
