@@ -8,7 +8,7 @@ const digests = JSON.parse(
   await readFile(new URL("./fixtures/prompt-digests.json", import.meta.url), "utf8"),
 ) as Record<string, string>;
 
-test("task prompt contents remain unchanged during module reorganization", () => {
+test("task prompts match their reviewed content digests", () => {
   assert.deepEqual(Object.keys(prompts).sort(), Object.keys(digests).sort());
   for (const [name, value] of Object.entries(prompts)) {
     const digest = createHash("sha256").update(JSON.stringify(value)).digest("hex");

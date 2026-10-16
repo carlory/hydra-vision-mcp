@@ -54,7 +54,7 @@ export function registerTextExtractionTool(server) {
   const retryableExtract = withRetry(service.extractText.bind(service), 2, 1000);
   server.tool(
     "extract_text_from_screenshot",
-    `Extract and recognize text from screenshots using advanced OCR capabilities.
+    `Transcribe visible text from screenshots without repairing or beautifying the source.
 
 Use this tool ONLY when the user has a screenshot containing text and wants to extract it.
 This tool specializes in OCR for code, terminal output, documentation, and general text extraction.
@@ -65,7 +65,7 @@ Do NOT use for: UI design conversion, error diagnosis, or diagram understanding.
       prompt: z
         .string()
         .describe(
-          "Instructions for text extraction. Specify what type of text to extract and any formatting requirements.",
+          "Instructions for verbatim transcription. Specify the text to extract, output format, and any explicitly requested character normalization.",
         ),
       programming_language: z
         .string()
